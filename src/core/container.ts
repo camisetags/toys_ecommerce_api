@@ -3,7 +3,13 @@ import { type UserReposisotry } from '../domain/users/repositories'
 import { UserDrizzleReposisotry } from '../domain/users/infra/repositories'
 
 class Container {
-  public getUsersRepository = (): UserReposisotry => new UserDrizzleReposisotry(db)
+  private static userRepo: UserReposisotry
+
+  constructor () {
+    Container.userRepo = new UserDrizzleReposisotry(db)
+  }
+
+  public getUsersRepository = (): UserReposisotry => Container.userRepo
 }
 
 export default new Container()
